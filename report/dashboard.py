@@ -139,6 +139,9 @@ class BarChart(MatplotlibViz):
         # learning model
         X = model.model_data(asset_id)
         
+        #Fill NaN values with 0 before prediction
+        X = X.fillna(0)
+
         #Handle empty data
         if X.empty:
             pred = 0.0
