@@ -60,7 +60,7 @@ class Team(QueryBase):
     #### YOUR CODE HERE
     def model_data(self, id):
 
-        return f"""
+        return self.pandas_query(f"""
             SELECT positive_events, negative_events FROM (
                     SELECT employee_id
                          , SUM(positive_events) positive_events
@@ -71,4 +71,4 @@ class Team(QueryBase):
                     WHERE {self.name}.{self.name}_id = {id}
                     GROUP BY employee_id
                    )
-                """
+                """)
