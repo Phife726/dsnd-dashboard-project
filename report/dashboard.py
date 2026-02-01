@@ -1,6 +1,7 @@
 from fasthtml.common import *
 import matplotlib.pyplot as plt
 
+
 # Import QueryBase, Employee, Team from employee_events
 from employee_events import QueryBase, Employee, Team
 
