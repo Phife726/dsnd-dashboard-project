@@ -103,8 +103,9 @@ class LineChart(MatplotlibViz):
         
         # call the .plot method for the
         # cumulative counts dataframe
-        df.plot(ax=ax)
-        
+        if not df.empty:
+            df.plot(ax=ax)
+
         # pass the axis variable
         # to the `.set_axis_styling`
         # method
@@ -138,13 +139,17 @@ class BarChart(MatplotlibViz):
         # learning model
         X = model.model_data(asset_id)
         
+        #Handle empty data
+        if X.empty:
+            pred = 0.0
+        else:
         # Using the predictor class attribute
         # pass the data to the `predict_proba` method
-        probs = self.predictor.predict_proba(X)
+            probs = self.predictor.predict_proba(X)
         
         # Index the second column of predict_proba output
         # The shape should be (<number of records>, 1)
-        risk = probs[:, 1]
+            risk = probs[:, 1]
         
         
         # Below, create a `pred` variable set to
@@ -152,13 +157,13 @@ class BarChart(MatplotlibViz):
         #
         # If the model's name attribute is "team"
         # We want to visualize the mean of the predict_proba output
-        if model.name == "team":
-            pred = risk.mean()
+            if model.name == "team":
+                pred = risk.mean()
             
         # Otherwise set `pred` to the first value
         # of the predict_proba output
-        else:
-            pred = risk[0]
+            else:
+                pred = risk[0]
         
         # Initialize a matplotlib subplot
         
