@@ -11,13 +11,20 @@ class Dropdown(BaseComponent):
 
     def build_component(self, entity_id, model):
         options = []
+        # Adding placeholder if this is a fresh load
+        if entity_id is None:
+            options.append(Option(f"-- Select {model.name.title()} --", value="", selected="selected", disabled="disabled"))
+        
         for text, value in self.component_data(entity_id, model):
-            option = Option(text, value=value, selected="selected" if str(value) == entity_id else "")
+            is_selected = str(value) == str(entity_id)
+            option = Option(text, value=value, selected="selected" if is_selected else "")
             options.append(option)
 
 
         dropdown_settings = {
-            'name': self.name
+            'name': self.name,
+            # Auto-submit
+            'onchange': 'this.form.requestSubmit()'
             }
         
         # if model.name:
